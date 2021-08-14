@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled main.cpp cmake-build-debug/shared_ptr.h)
+add_executable(shared_ptr_test main.cpp shared_ptr.h)
