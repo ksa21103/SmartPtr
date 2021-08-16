@@ -336,8 +336,8 @@ shared_ptr<T>::tryToDestroy()
     {
         if (1 == decrementCounter(m_pCounter))
         {
+        	destroyCounter();
             destroyObject();
-            destroyCounter();
         }
         else
         {
