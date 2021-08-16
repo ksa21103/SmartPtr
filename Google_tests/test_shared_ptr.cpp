@@ -1,5 +1,6 @@
 #include <vector>
 #include <future>
+#include <stdexcept>
 
 #include "gtest/gtest.h"
 
@@ -22,6 +23,11 @@ public:
 	~CounterHelper()
 	{
 		--sCounter;
+	}
+
+	void throw_error()
+	{
+		throw std::runtime_error("Exception occurred");
 	}
 
 	size_t getInstanceNo() const
@@ -346,4 +352,23 @@ TEST(SharedPointerTestSuite, CreateWithObjParallelsCopy)
 
 	vec1.clear();
 	EXPECT_EQ(pCounterHelper.use_count(), 1);
+}
+
+TEST(SharedPointerTestSuite, CreateWithObjThrowException)
+{
+	EXPECT_EQ(sCounter, 0);
+
+	try
+	{
+		CounterHelperPtr pCounterHelper1(new CounterHelper(1));
+
+		EXPECT_EQ(sCounter, 1);
+
+		(*pCounterHelper1).throw_error();
+	}
+	catch (const std::exception&)
+	{
+	}
+
+	EXPECT_EQ(sCounter, 0);
 }
