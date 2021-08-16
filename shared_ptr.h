@@ -134,7 +134,7 @@ private:
 
 private:
 
-    Counter* m_pCounter = nullptr;      // Ref counter
+    Counter* m_pCounter = nullptr;      // Pointer to ref counter
     T*       m_pObject  = nullptr;      // Pointer to owned object
 };
 
