@@ -264,6 +264,28 @@ TEST(SharedPointerTestSuite, CreateWithObjCreateWithMoveAssignmentReset)
 	EXPECT_EQ(sCounter, 0);
 }
 
+TEST(SharedPointerTestSuite, CreateWithObjMoveThisToThis)
+{
+	EXPECT_EQ(sCounter, 0);
+
+	CounterHelperPtr pCounterHelper1(new CounterHelper(1));
+	EXPECT_EQ(sCounter, 1);
+	EXPECT_EQ(pCounterHelper1.use_count(), 1);
+
+	auto pObj = pCounterHelper1.get();
+
+	pCounterHelper1 = std::move(pCounterHelper1);
+
+	EXPECT_EQ(pCounterHelper1.get(), pObj);
+
+	EXPECT_EQ(pCounterHelper1.use_count(), 1);
+	EXPECT_EQ(sCounter, 1);
+
+	pCounterHelper1.reset();
+
+	EXPECT_EQ(sCounter, 0);
+}
+
 TEST(SharedPointerTestSuite, CreateWithObjAndStdSwap)
 {
 	EXPECT_EQ(sCounter, 0);
